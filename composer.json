@@ -1,0 +1,23 @@
+{
+    "name": "wahliyudin/calculator",
+    "require-dev": {
+        "pestphp/pest": "^3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wahliyudin\\Calculator\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "wahliyudin",
+            "email": "wahliyudinzein@gmail.com"
+        }
+    ],
+    "require": {},
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
