@@ -31,5 +31,7 @@ class ApprovalServiceProvider extends ServiceProvider
                 ApprovalWorkflowCommand::class
             ]);
         }
+
+        $this->mergeConfigFrom(__DIR__ . '/../../config/approval.php', 'approval');
     }
 }
