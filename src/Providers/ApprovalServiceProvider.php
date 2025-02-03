@@ -5,6 +5,7 @@ namespace Tbu\Approval\Providers;
 use Tbu\Approval\Contracts\ApprovalRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Tbu\Approval\Commands\ApprovalWorkflowCommand;
 
 class ApprovalServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,11 @@ class ApprovalServiceProvider extends ServiceProvider
             );
         }
         $this->app->bind(ApprovalRepositoryInterface::class, $repository);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                ApprovalWorkflowCommand::class
+            ]);
+        }
     }
 }

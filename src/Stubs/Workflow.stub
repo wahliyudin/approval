@@ -1,0 +1,34 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ parentNamespace }}\{{ parentClass }};
+use Tbu\Approval\Enums\Approval;
+use Tbu\Approval\Enums\LastAction;
+use Tbu\Approval\Traits\HasWorkflow;
+use Tbu\Approval\Models\ApprovalModel;
+
+class {{ class }} extends ApprovalModel
+{
+    use HasWorkflow;
+    
+    protected $fillable = [
+        'sequence',
+        '{{ parentKey }}',
+        'nik',
+        'approval',
+        'title',
+        'last_action',
+        'last_action_date',
+    ];
+
+    protected $casts = [
+        'approval' => Approval::class,
+        'last_action' => LastAction::class,
+    ];
+
+    public function {{ parentFunction }}()
+    {
+        return $this->belongsTo({{ parentClass }}::class);
+    }
+}
