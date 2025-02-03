@@ -8,6 +8,7 @@ use Tbu\Approval\Contracts\ApprovalModelInterface;
 use Tbu\Approval\Enums\LastAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Tbu\Approval\Enums\Approval;
 
@@ -35,7 +36,10 @@ class ApprovalService implements ApprovalServiceInterface
             $workflowDatas = $this->approvals($nik);
         }
         $workflowDatas = $this->checkDuplicate($workflowDatas);
+        DB::beginTransaction();
         $this->model->workflows()->createMany($workflowDatas->toArray());
+        $this->model->fireApprovalEvent('workflow.created', [$this->model]);
+        DB::commit();
     }
 
     public function approvals($nik)

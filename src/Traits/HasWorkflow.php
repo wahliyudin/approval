@@ -4,7 +4,7 @@ namespace Tbu\Approval\Traits;
 
 use Tbu\Approval\Checkers\CheckerManager;
 use Tbu\Approval\Checkers\Model\ModelChecker;
-use Tbu\Approval\Contracts\ApprovalModel;
+use Tbu\Approval\Contracts\ApprovalModelInterface;
 use Tbu\Approval\Contracts\ApprovalRepositoryInterface;
 use Tbu\Approval\Contracts\ApprovalServiceInterface;
 use Tbu\Approval\Contracts\WorkflowModel;
@@ -27,9 +27,9 @@ trait HasWorkflow
          * TODO: buat stub untuk generate model worflow dan migration nya
          * 
          */
-        if (!is_subclass_of(static::class, ApprovalModel::class)) {
+        if (!is_subclass_of(static::class, ApprovalModelInterface::class)) {
             throw new \RuntimeException(
-                static::class . " must implement " . ApprovalModel::class
+                static::class . " must implement " . ApprovalModelInterface::class
             );
         }
     }
@@ -87,7 +87,7 @@ trait HasWorkflow
 
     public function createWorkflows($workflows = null)
     {
-        return $this->approvalService()->create($workflows);
+        return $this->approval()->create($workflows);
     }
 
     public function lastAction(LastAction $lastAction, $reason = null, $nik = null)

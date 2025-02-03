@@ -16,6 +16,7 @@ trait HasApprovalEvents
         'workflowLastAndApproved',
         'workflowNotLastAndApproved',
         'workflowRejected',
+        'workflowCreated',
     ];
 
     public static function approvalObserve(object|string $class): void
@@ -37,7 +38,7 @@ trait HasApprovalEvents
         }
     }
 
-    protected function fireApprovalEvent(string $event, array $payload)
+    public function fireApprovalEvent(string $event, array $payload)
     {
         if (! isset(static::$dispatcher)) {
             return true;
@@ -73,5 +74,10 @@ trait HasApprovalEvents
     public static function workflowRejected(Closure|string|array $callback): void
     {
         static::registerApprovalEvent('workflow.rejected', $callback);
+    }
+
+    public static function workflowCreated(Closure|string|array $callback): void
+    {
+        static::registerApprovalEvent('workflow.created', $callback);
     }
 }
