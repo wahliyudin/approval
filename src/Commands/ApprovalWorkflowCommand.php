@@ -76,8 +76,8 @@ class ApprovalWorkflowCommand extends Command
     private function checkStubFiles(array $modelStructure): bool
     {
         $stubPaths = [
-            'model' => __DIR__ . '/../Stubs/Workflow.stub',
-            'migration' => __DIR__ . '/../Stubs/Migration.stub'
+            'model' => __DIR__ . '/../../stubs/workflow.stub',
+            'migration' => __DIR__ . '/../../stubs/migration.stub'
         ];
 
         foreach ($stubPaths as $type => $path) {
@@ -97,7 +97,7 @@ class ApprovalWorkflowCommand extends Command
 
     private function generateModel(array $modelStructure): bool
     {
-        $stubPath = __DIR__ . '/../Stubs/Workflow.stub';
+        $stubPath = __DIR__ . '/../../stubs/workflow.stub';
         $stubContent = File::get($stubPath);
 
         $modelContent = str_replace(
@@ -132,7 +132,7 @@ class ApprovalWorkflowCommand extends Command
     {
         $fileName = date('Y_m_d_His') . "_create_{$modelStructure['approvalTableName']}_table.php";
         $path = database_path("migrations/{$fileName}");
-        $stubPath = __DIR__ . '/../Stubs/Migration.stub';
+        $stubPath = __DIR__ . '/../../stubs/migration.stub';
 
         $stubContent = File::get($stubPath);
         $migrationContent = str_replace(

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tbu\Approval\Providers;
+namespace Tbu\Approval;
 
 use Tbu\Approval\Contracts\ApprovalRepositoryInterface;
 use Illuminate\Support\Facades\Config;
