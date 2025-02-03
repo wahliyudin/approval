@@ -11,11 +11,6 @@ class ApprovalServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
-    }
-
-    public function boot(): void
-    {
         $repository = Config::get('approval.repository');
         if (!$repository) {
             throw new \RuntimeException("Approval repository not set");
@@ -25,7 +20,10 @@ class ApprovalServiceProvider extends ServiceProvider
             );
         }
         $this->app->bind(ApprovalRepositoryInterface::class, $repository);
+    }
 
+    public function boot(): void
+    {
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ApprovalWorkflowCommand::class
