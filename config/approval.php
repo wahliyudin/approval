@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'repository' => null,
+    'repository' => \Tbu\Approval\Repositories\ApprovalRepository::class,
 ];
