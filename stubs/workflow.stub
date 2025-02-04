@@ -3,12 +3,12 @@
 namespace {{ namespace }};
 
 use {{ parentNamespace }}\{{ parentClass }};
+use Illuminate\Database\Eloquent\Model;
 use Tbu\Approval\Enums\Approval;
 use Tbu\Approval\Enums\LastAction;
 use Tbu\Approval\Traits\HasWorkflow;
-use Tbu\Approval\Models\ApprovalModel;
 
-class {{ class }} extends ApprovalModel
+class {{ class }} extends Model
 {
     use HasWorkflow;
     
