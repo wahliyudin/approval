@@ -23,10 +23,6 @@ trait HasWorkflow
 
     public static function bootHasWorkflow(): void
     {
-        /**
-         * TODO: buat stub untuk generate model worflow dan migration nya
-         * 
-         */
         if (!is_subclass_of(static::class, ApprovalModelInterface::class)) {
             throw new \RuntimeException(
                 static::class . " must implement " . ApprovalModelInterface::class
@@ -41,7 +37,8 @@ trait HasWorkflow
 
     protected function approvalModelChecker(): ModelChecker
     {
-        return (new CheckerManager($this))->getChecker();
+        $repository = resolve(ApprovalRepositoryInterface::class);
+        return (new CheckerManager($this, $repository))->getChecker();
     }
 
     public function getWorkflows(): Collection
@@ -112,10 +109,10 @@ trait HasWorkflow
         if ($hasLast && $lastAction == LastAction::APPROVE) {
             $this->setAttribute('status', Status::CLOSE);
             $this->save();
-            $this->fireApprovalEvent('workflow.last.and.approved', [$this, $workflow]);
+            $this->fireApprovalEvent('workflow.last.and.approved', [$this]);
         }
         if (!$hasLast && $lastAction == LastAction::APPROVE) {
-            $this->fireApprovalEvent('workflow.not.last.and.approved', [$this, $workflow]);
+            $this->fireApprovalEvent('workflow.not.last.and.approved', [$this]);
         }
         if ($lastAction == LastAction::REJECT) {
             if (!in_array('reason', $this->getFillable())) {
@@ -124,7 +121,7 @@ trait HasWorkflow
             $this->setAttribute('status', Status::REJECT);
             $this->setAttribute('reason', $reason);
             $this->save();
-            $this->fireApprovalEvent('workflow.rejected', [$this, $workflow]);
+            $this->fireApprovalEvent('workflow.rejected', [$this]);
         }
         DB::commit();
     }
