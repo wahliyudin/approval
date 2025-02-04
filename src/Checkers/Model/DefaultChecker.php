@@ -6,6 +6,7 @@ use Tbu\Approval\Contracts\WorkflowModel;
 use Tbu\Approval\Enums\LastAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Tbu\Approval\Enums\Approval;
 
 class DefaultChecker extends ModelChecker
 {
@@ -44,6 +45,13 @@ class DefaultChecker extends ModelChecker
         $next = $current->sequence + 1;
         return $this->model->getRelation('workflows')
             ->where('sequence', $next)
+            ->first();
+    }
+
+    public function getSubmittedWorkflow(): Model|WorkflowModel|null
+    {
+        return $this->model->getRelation('workflows')
+            ->where('approval', Approval::SUBMITTED)
             ->first();
     }
 }

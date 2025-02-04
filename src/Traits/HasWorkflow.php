@@ -59,6 +59,11 @@ trait HasWorkflow
         return $this->approvalModelChecker()->getLastWorkflow();
     }
 
+    public function getSubmittedWorkflow(): Model|WorkflowModel|null
+    {
+        return $this->approvalModelChecker()->getSubmittedWorkflow();
+    }
+
     public function nextWorkflow(): Model|WorkflowModel|null
     {
         return $this->approvalModelChecker()->getNextWorkflow();

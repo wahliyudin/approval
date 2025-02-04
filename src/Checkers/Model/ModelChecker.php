@@ -21,4 +21,6 @@ abstract class ModelChecker
     abstract public function getCurrentWorkflow(): Model|WorkflowModel|null;
 
     abstract public function getNextWorkflow(): Model|WorkflowModel|null;
+
+    abstract public function getSubmittedWorkflow(): Model|WorkflowModel|null;
 }

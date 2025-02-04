@@ -16,4 +16,10 @@ class ApprovalModel extends Model implements ApprovalModelInterface
     {
         parent::__construct($attributes);
     }
+
+    public function setModule($module): self
+    {
+        $this->module = $module;
+        return $this;
+    }
 }
