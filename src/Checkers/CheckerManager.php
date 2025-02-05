@@ -17,11 +17,10 @@ class CheckerManager
 
     public function getChecker(): ModelChecker
     {
-        if (!$this->model->relationLoaded('workflows')) {
-            $this->model->load('workflows');
-        }
-        if (!$this->model->relationLoaded('workflows.employee')) {
-            $niks = $this->model->workflows->pluck('nik');
+        $this->model->loadMissing('workflows');
+        $workflow = $this->model->workflows?->first();
+        if ($workflow && !$workflow->relationLoaded('employee')) {
+            $niks = $this->model->workflows->pluck('nik')->unique();
             $employees = $this->approvalRepository->getEmployees($niks->toArray());
             $this->model->workflows->each(function ($workflow) use ($employees) {
                 $workflow->setRelation('employee', $employees[$workflow->nik] ?? null);

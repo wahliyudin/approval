@@ -14,15 +14,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Tbu\Approval\Helper;
 use Tbu\Approval\Services\ApprovalService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 trait HasWorkflow
 {
-    use HasApprovalEvents;
+    use HasApprovalEvents, HasApprovalScopes;
 
     public static function bootHasWorkflow(): void
     {
+        // TODO: buat stub observer
         if (!is_subclass_of(static::class, ApprovalModelInterface::class)) {
             throw new \RuntimeException(
                 static::class . " must implement " . ApprovalModelInterface::class
@@ -33,6 +35,15 @@ trait HasWorkflow
     public function workflows(): HasMany
     {
         return $this->hasMany(Helper::modelWorkflow($this));
+    }
+
+    public function workflow(): HasOne
+    {
+        return $this->hasOne(Helper::modelWorkflow($this))->ofMany([
+            'sequence' => 'min',
+        ], function ($query) {
+            $query->where('last_action', LastAction::NOTTING);
+        });
     }
 
     protected function approvalModelChecker(): ModelChecker
@@ -87,9 +98,9 @@ trait HasWorkflow
         return new ApprovalService($this, $repository);
     }
 
-    public function createWorkflows($workflows = null)
+    public function createWorkflows($nik, $workflows = null)
     {
-        return $this->approval()->create($workflows);
+        return $this->approval()->create($nik, $workflows);
     }
 
     public function lastAction(LastAction $lastAction, $reason = null, $nik = null)
