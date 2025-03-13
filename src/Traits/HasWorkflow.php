@@ -2,6 +2,7 @@
 
 namespace Tbu\Approval\Traits;
 
+use BackedEnum;
 use Tbu\Approval\Checkers\CheckerManager;
 use Tbu\Approval\Checkers\Model\ModelChecker;
 use Tbu\Approval\Contracts\ApprovalModelInterface;
@@ -92,9 +93,12 @@ trait HasWorkflow
         return $this->currentWorkflow()?->nik == $nik;
     }
 
-    public function approval(): ApprovalServiceInterface
+    public function approval(?BackedEnum $module = null): ApprovalServiceInterface
     {
         $repository = resolve(ApprovalRepositoryInterface::class);
+        if ($module) {
+            $this->module = $module;
+        }
         return new ApprovalService($this, $repository);
     }
 
@@ -149,12 +153,12 @@ trait HasWorkflow
         });
     }
 
-    public function approve(int $nik = null)
+    public function approve(?int $nik = null)
     {
         $this->lastAction(LastAction::APPROVE, null, $nik);
     }
 
-    public function reject($reason, int $nik = null)
+    public function reject($reason, ?int $nik = null)
     {
         $this->lastAction(LastAction::REJECT, $reason, $nik);
     }
