@@ -6,7 +6,7 @@ use Tbu\Approval\Contracts\ApprovalModelInterface;
 use Tbu\Approval\Traits\HasWorkflow;
 use Illuminate\Database\Eloquent\Model;
 
-class ApprovalModel extends Model implements ApprovalModelInterface
+abstract class ApprovalModel extends Model implements ApprovalModelInterface
 {
     use HasWorkflow;
 
@@ -22,4 +22,6 @@ class ApprovalModel extends Model implements ApprovalModelInterface
         $this->module = $module;
         return $this;
     }
+
+    abstract function getNik(): string|int|null;
 }
