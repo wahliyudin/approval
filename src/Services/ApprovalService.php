@@ -38,6 +38,7 @@ class ApprovalService implements ApprovalServiceInterface
         $workflowDatas = $this->checkDuplicate($workflowDatas);
         DB::beginTransaction();
         $this->model->workflows()->createMany($workflowDatas->toArray());
+        $this->model->refresh();
         $this->model->fireApprovalEvent('workflow.created', [$this->model]);
         DB::commit();
     }
