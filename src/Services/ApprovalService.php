@@ -20,6 +20,10 @@ class ApprovalService implements ApprovalServiceInterface
 
     protected \Closure $conditionContinue;
 
+    protected bool $forceClose = false;
+
+    protected $currentWorkflow = null;
+
     public function __construct(
         public Model|ApprovalModelInterface $model,
         public ApprovalRepositoryInterface $approvalRepository

@@ -109,9 +109,9 @@ trait HasWorkflow
 
     public function lastAction(LastAction $lastAction, $reason = null, $nik = null)
     {
-        $workflow = $this->currentWorkflow();
+        $workflow = $this->currentWorkflow ?? $this->currentWorkflow();
         if (!$workflow) throw new \Exception('All approval have been done');
-        $hasLast = $this->hasLastWorkflow();
+        $hasLast = $this->forceClose ? true : $this->hasLastWorkflow();
 
         DB::beginTransaction();
         $workflow->setAttribute('last_action', $lastAction);
@@ -151,6 +151,18 @@ trait HasWorkflow
             $this->setAttribute('reason', null);
             $this->save();
         });
+    }
+
+    public function setCurrentWorkflow($workflow)
+    {
+        $this->currentWorkflow = $workflow;
+        return $this;
+    }
+
+    public function withForceClose()
+    {
+        $this->forceClose = true;
+        return $this;
     }
 
     public function approve(?int $nik = null)
