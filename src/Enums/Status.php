@@ -10,6 +10,7 @@ enum Status: string
     case REJECT = 'reject';
     case CANCEL = 'cancel';
     case REVISION = 'revision';
+    case COMPLETED = 'completed';
 
     public function label(): string
     {
@@ -20,6 +21,7 @@ enum Status: string
             self::REJECT => 'Reject',
             self::CANCEL => 'Cancel',
             self::REVISION => 'Revision',
+            self::COMPLETED => 'Completed',
         };
     }
 
@@ -32,6 +34,7 @@ enum Status: string
             self::REJECT => '<span class="badge bg-danger-gradient fs-10">' . self::REJECT->label() . '</span>',
             self::CANCEL => '<span class="badge bg-secondary-gradient fs-10">' . self::CANCEL->label() . '</span>',
             self::REVISION => '<span class="badge bg-info-gradient fs-10">' . self::REVISION->label() . '</span>',
+            self::COMPLETED => '<span class="badge bg-success-gradient fs-10">' . self::COMPLETED->label() . '</span>',
         };
     }
 }

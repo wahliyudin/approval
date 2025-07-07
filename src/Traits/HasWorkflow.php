@@ -23,6 +23,10 @@ trait HasWorkflow
 {
     use HasApprovalEvents, HasApprovalScopes;
 
+    protected bool $forceClose = false;
+
+    protected $currentWorkflow = null;
+
     public static function bootHasWorkflow(): void
     {
         // TODO: buat stub observer
@@ -153,18 +157,6 @@ trait HasWorkflow
         });
     }
 
-    public function setCurrentWorkflow($workflow)
-    {
-        $this->currentWorkflow = $workflow;
-        return $this;
-    }
-
-    public function withForceClose()
-    {
-        $this->forceClose = true;
-        return $this;
-    }
-
     public function approve(?int $nik = null)
     {
         $this->lastAction(LastAction::APPROVE, null, $nik);
@@ -173,5 +165,17 @@ trait HasWorkflow
     public function reject($reason, ?int $nik = null)
     {
         $this->lastAction(LastAction::REJECT, $reason, $nik);
+    }
+
+    public function setCurrentWorkflow($workflow): self
+    {
+        $this->currentWorkflow = $workflow;
+        return $this;
+    }
+
+    public function withForceClose(): self
+    {
+        $this->forceClose = true;
+        return $this;
     }
 }
