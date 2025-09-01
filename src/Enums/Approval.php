@@ -18,6 +18,7 @@ enum Approval: string
     case FINANCE_SITE = 'FINANCE_SITE';
     case PROCUREMENT = 'PROCUREMENT';
     case ASSET = 'ASSET';
+    case PLANT_SUPERVISOR = 'PLANT_SUPERVISOR';
     case OTHER = 'OTHER';
 
     public function valueByHRIS()
@@ -59,6 +60,7 @@ enum Approval: string
             self::ATASAN_TIDAK_LANGSUNG => 'Atasan Tidak Langsung',
             self::FINANCE_SITE => 'Finance Site',
             self::PROCUREMENT => 'Procurement',
+            self::PLANT_SUPERVISOR => 'Plant Supervisor',
             self::ASSET => 'Asset',
             default => null
         };
@@ -81,6 +83,7 @@ enum Approval: string
             self::ATASAN_TIDAK_LANGSUNG->value => self::ATASAN_TIDAK_LANGSUNG,
             self::FINANCE_SITE->value => self::FINANCE_SITE,
             self::PROCUREMENT->value => self::PROCUREMENT,
+            self::PLANT_SUPERVISOR->value => self::PLANT_SUPERVISOR,
             self::ASSET->value => self::ASSET,
             default => null
         };
@@ -104,6 +107,7 @@ enum Approval: string
             12 => self::FINANCE_SITE,
             14 => self::PROCUREMENT,
             15 => self::ASSET,
+            16 => self::PLANT_SUPERVISOR,
             default => null,
         };
     }
