@@ -40,6 +40,8 @@ enum Approval: string
             self::FINANCE_SITE => 12,
             self::PROCUREMENT => 14,
             self::ASSET => 15,
+            self::PLANT_SUPERVISOR => 16,
+            self::BUDGET_CONTROL => 17,
             default => null
         };
     }
